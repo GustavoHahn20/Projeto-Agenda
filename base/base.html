@@ -1,0 +1,76 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "styleAgenda.css" %}">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-heading">
+            <a href="{% url "agenda:home" %}" class="header-link"> AGENDA </a>
+        </h1>
+        <nav class="menu">
+            <ul class="menu-list">
+                {% if user.is_authenticated %}
+                <li class="menu-item">
+                    <a href="{% url "agenda:create" %}" class="menu-link"> Create Contact </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{% url "agenda:logout" %}" class="menu-link"> Logout </a>
+                </li>
+                {% else %}
+                <li class="menu-item">
+                    <a href="{% url "agenda:login" %}" class="menu-link"> Login </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <div class="search">
+            <form action="{% url "agenda:search" %}" method="get">
+                <input 
+                type="search"
+                class="search-input"
+                placeholder="Search"
+                id="search"
+                name="q"
+                value="{{searchValue}}">
+            </form>
+        </div>
+    </header>
+    <main class="content">
+        {% block content %}
+
+        {% endblock content %}
+        {% if page_obj %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1&q={{request.GET.q.strip}}">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}&q={{request.GET.q.strip}}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&q={{request.GET.q.strip}}">next</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}&q={{request.GET.q.strip}}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+    </main>
+    <script>
+        msg = document.getElementById('message');
+        msg.addEventListener('click', event => {
+            event.preventDefault();
+            msg.style.display = 'none';
+        })
+    </script>
+</body>
+</html>

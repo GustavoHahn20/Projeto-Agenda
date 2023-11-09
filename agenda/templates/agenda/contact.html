@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="single-contact">
+        <h1 class="single-contact-name">
+            {{contact.firstName}} {{contact.lastName}}
+        </h1>
+        <p><b>ID: </b> {{contact.id}} </p>
+        <p><b>E-mail: </b> {{contact.email}} </p>
+        <p><b>Telefone: </b> {{contact.phone}} </p>
+        <p><b>Created Date: </b> {{contact.createdDate}} </p>
+        <p><b>Description: </b> {{contact.description}} </p>
+        <p><b>Category: </b> {{contact.category.name}} </p>
+    </div>
+    <a href="{% url "agenda:update" contact.id %}">
+        <div class="form_content">
+            <div class="form-group">
+                <button class="btn" type="submit" >Edit</button>
+            </div>
+        </div>
+    </a>
+    <a href="{% url "agenda:delete" contact.id %}">
+        <div class="form_content">
+            <div class="form-group">
+                <button class="btn" type="submit" style="background-color: red;" >Delete</button>
+            </div>
+        </div>
+    </a>
+{% endblock content %}

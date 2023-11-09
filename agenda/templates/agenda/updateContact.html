@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="form-wrapper">
+        <h2>Contact</h2>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form_content">
+                <div class="form-group">
+                    <label for="idPhone">Phone</label>
+                    <input type="text" name="phone" maxlength="255" id="idPhone" required value={{contact.phone}}>
+                    <label for="idEmail">Email</label>
+                    <input type="email" name="email" maxlength="255" id="idEmail" value={{contact.email}}>
+
+                    <label for="idDescription">Description</label>
+                    <textarea name="description" id="idDescription" cols="30" rows="10" maxlength="750">{{contact.description}}</textarea>
+                    <label for="idCategory">Categories</label>
+                    <select name="category" id="idCategory">
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form_content">
+                <div class="form-group">
+                    <button class="btn" type="submit" >Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

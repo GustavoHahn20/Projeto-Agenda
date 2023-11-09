@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-wrapper">
+    {% if messages %}
+        {% for message in messages %}
+            <div id="message" class="message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <h2>Login</h2>
+    <form action="{% url "agenda:login" %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form_content">
+            <div class="form-group">
+                <label for="idUser">User</label>
+                <input type="text" name="user" maxlength="255" id="idUser" required>
+                <label for="idPassword">Password</label>
+                <input type="text" name="password" maxlength="255" id="idPassword">
+            </div>
+        </div>
+        <div class="form_content">
+            <div class="form-group">
+                <button class="btn" type="submit" >Login</button>
+            </div>
+        </div>
+        <a href="{% url "agenda:register" %}">Não possui um a conta? Registre-se!</a>
+    </form>
+</div>
+{% endblock content %}
